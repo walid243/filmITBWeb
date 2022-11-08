@@ -3,7 +3,7 @@ package com.example.templates
 import io.ktor.server.html.*
 import kotlinx.html.*
 
-class AddFilm : Template<HTML> {
+class AddFilmTemplate : Template<HTML> {
     override fun HTML.apply() {
         head {
             title { +"Add Film" }
@@ -15,6 +15,7 @@ class AddFilm : Template<HTML> {
             main {
                 section {
                     form {
+                        encType = FormEncType.multipartFormData
                         method = FormMethod.post
                         action = "/FilmITB/new"
                         label {

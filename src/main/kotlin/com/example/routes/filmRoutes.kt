@@ -2,6 +2,7 @@ package com.example.routes
 
 import com.example.models.Film
 import com.example.models.FilmITB
+import com.example.templates.AddFilmTemplate
 import com.example.templates.FilmTemplate
 import com.example.templates.LayoutTemplate
 import io.ktor.http.*
@@ -11,8 +12,6 @@ import io.ktor.server.html.*
 import io.ktor.server.request.*
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
-import io.ktor.server.routing.header
-import kotlinx.html.*
 import java.io.File
 
 fun Route.filmRoutes() {
@@ -44,7 +43,7 @@ fun Route.filmRoutes() {
         }
         get("/new") {
             call.respondHtml(HttpStatusCode.OK) {
-                LayoutTemplate(filmITB.getFilms()).apply {
+                AddFilmTemplate().apply {
                     insert(this, TemplatePlaceholder())
                 }
             }
@@ -78,6 +77,7 @@ fun Route.filmRoutes() {
             }
             val film = Film(id.toInt(),title,year,genre, director, photo)
             filmITB.addFilm(film)
+            println(filmITB)
             call.respondText("Film storage correctly", status = HttpStatusCode.Created)
         }
     }

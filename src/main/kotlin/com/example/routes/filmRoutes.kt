@@ -48,9 +48,19 @@ fun Route.filmRoutes() {
                 }
             }
         }
+        get("/uploads/{imageName}") {
+            val imageName = call.parameters["imageName"]
+            var file = File("./uploads/$imageName")
+            if(file.exists()){
+                call.respondFile(File("./uploads/$imageName"))
+            }
+            else{
+                call.respondText("Image not found", status = HttpStatusCode.NotFound)
+            }
+        }
         post("/new") {
             val partData = call.receiveMultipart()
-            var id: String = ""
+            val id  = filmITB.getFilms().size + 1
             var title: String = ""
             var year: String = ""
             var genre: String = ""
@@ -60,7 +70,6 @@ fun Route.filmRoutes() {
                 when (part) {
                     is PartData.FormItem -> {
                         when (part.name){
-                            "id" -> id = part.value
                             "title" -> title = part.value
                             "year" -> year = part.value
                             "genre" -> genre = part.value
@@ -70,12 +79,13 @@ fun Route.filmRoutes() {
                     is PartData.FileItem -> {
                         photo = part.originalFileName as String
                         val fileBytes = part.streamProvider().readBytes()
-                        File("data/$photo").writeBytes(fileBytes)
+                        File("uploads/$photo").writeBytes(fileBytes)
                     }
                     else -> {}
                 }
+                part.dispose()
             }
-            val film = Film(id.toInt(),title,year,genre, director, photo)
+            val film = Film(id,title,year,genre, director, photo)
             filmITB.addFilm(film)
             println(filmITB)
             call.respondText("Film storage correctly", status = HttpStatusCode.Created)

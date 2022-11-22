@@ -14,7 +14,7 @@ class LayoutTemplate(storage: List<Film>) : Template<HTML> {
         body {
             header {
                 img {
-                    src = "/static/Logo.png"
+                    src = "/static/fons-alum.png"
                     alt = "logo.png"
                 }
             }
@@ -24,14 +24,18 @@ class LayoutTemplate(storage: List<Film>) : Template<HTML> {
                     button {
                         id = "lista_de_pelis"
                         onClick = "location.href='/FilmITB/all'"
+                        text("Lista de peliculas")
+
                     }
                     button {
                         id = "nueva_peli"
                         onClick = "location.href='/FilmITB/new'"
+                        text("Nueva pelicula")
                     }
                     button {
                         id = "about_us"
                         onClick = "location.href='/FilmITB/about_us'"
+                        text("About us")
                     }
                 }
                 section {

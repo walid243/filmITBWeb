@@ -12,7 +12,7 @@ class AllFilmsTemplate(storage:List<Film>) : Template<FlowContent> {
                 tr {
                     td {
                         img {
-                            src = it.image
+                            src = "/FilmITB/uploads/${it.image}"
                             alt = it.image
                         }
                     }
@@ -23,6 +23,7 @@ class AllFilmsTemplate(storage:List<Film>) : Template<FlowContent> {
                         button {
                             id = "filmDetails"
                             onClick = "location.href='/FilmITB/film/${it.id}'"
+                            text("Detalles")
                         }
                     }
                 }
